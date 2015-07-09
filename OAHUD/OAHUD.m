@@ -10,6 +10,8 @@
 
 @implementation OAHUD
 
+@synthesize panelViewDimension, loadingDimension, loadingWeight, colorInfos, color;
+
 + (UIWindow *)window {
     if (!objc_getAssociatedObject(self, _cmd)) {
         UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -19,9 +21,7 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 + (void)show {
-    OAHUD *hud = [OAHUD new];
-    [[OAHUD window] setRootViewController:hud];
-    [[OAHUD window] makeKeyAndVisible];
+    [OAHUD show:[OAHUD new]];
 }
 + (void)hide {
     [[OAHUD window].rootViewController performSelector:@selector(runHideAnimate:) withObject: ^{
@@ -29,6 +29,48 @@
         objc_setAssociatedObject(self, @selector(window), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [[UIApplication sharedApplication].keyWindow makeKeyWindow];
     }];
+}
++ (void)show:(OAHUD *)hud {
+    [[OAHUD window] setRootViewController:hud];
+    [[OAHUD window] makeKeyAndVisible];
+}
+
+- (void)initOption {
+    if (!self.panelViewDimension)
+        [self setPanelViewDimension:100.0];
+
+    if (!self.loadingDimension)
+        [self setLoadingDimension:70.0];
+
+    if (!self.loadingWeight)
+        [self setLoadingWeight:5.0];
+    
+    if ((self.loadingDimension > self.panelViewDimension) || (self.loadingDimension < 1) || ((self.loadingDimension - (self.loadingWeight * 2)) < 1))
+        [self setPanelViewDimension:self.loadingDimension];
+    
+    if ((self.loadingDimension - (self.loadingWeight * 2)) < 1)
+        [self setLoadingWeight:self.loadingDimension / 4];
+    
+    if (!self.colorInfos)
+        [self setColorInfos:@[@{@"color":[UIColor colorWithRed:0.44 green:0.79 blue:0.94 alpha:1],
+                                @"location":@0.0f},
+                              @{@"color":[UIColor colorWithRed:0.44 green:0.79 blue:0.94 alpha:0],
+                                @"location":@1.0f}]];
+    if (!self.color)
+        [self setColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1]];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self initOption];
+    [self initUI];
+    [self runShowAnimate];
+}
+- (void)show {
+    [OAHUD show:self];
+}
+- (void)hide {
+    [OAHUD hide];
 }
 
 - (void)initVisualEffectView {
@@ -86,11 +128,13 @@
                                                            constant:0.0]];
 }
 - (void)initPanelView {
-    self.panelViewDimension = 100.0;
+    
+
+    
     self.panelView = [UIView new];
     [self.panelView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.panelView setBackgroundColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1]];
-    [self.panelView.layer setBorderColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:.75].CGColor];
+    [self.panelView setBackgroundColor:self.color];
+    [self.panelView.layer setBorderColor:[UIColor clearColor].CGColor];
     [self.panelView.layer setBorderWidth:3.5f / [UIScreen mainScreen].scale];
     [self.panelView.layer setCornerRadius:10.0f];
     [self.panelView setClipsToBounds:YES];
@@ -130,12 +174,11 @@
                                                            constant:self.panelViewDimension]];
 }
 - (void)initLoadingView1 {
-    self.loadingDimension = 70.0;
     
     self.loadingView1 = [UIView new];
     [self.loadingView1 setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    [self.loadingView1.layer setBorderColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:.75].CGColor];
+    [self.loadingView1.layer setBorderColor:[UIColor clearColor].CGColor];
     [self.loadingView1.layer setBorderWidth:1.0f / [UIScreen mainScreen].scale];
     [self.loadingView1.layer setCornerRadius:self.loadingDimension / 2];
     [self.loadingView1 setClipsToBounds:YES];
@@ -175,13 +218,9 @@
                                                               multiplier:1.0
                                                                 constant:self.loadingDimension]];
     
-    NSMutableArray *colorInfos = [NSMutableArray new];
-    [colorInfos addObject:@{@"color":[UIColor colorWithRed:0.44 green:0.79 blue:0.94 alpha:1],
-                            @"location":@0}];
-    [colorInfos addObject:@{@"color":[UIColor colorWithRed:0.44 green:0.79 blue:0.94 alpha:0],
-                            @"location":@1}];
+
     
-    CAGradientLayer *bgLayer = [self colorGradient:colorInfos];
+    CAGradientLayer *bgLayer = [self colorGradient];
     bgLayer.frame = CGRectMake(0, 0, self.loadingDimension, self.loadingDimension);
     [self.loadingView1.layer insertSublayer:bgLayer atIndex:0];
     
@@ -197,12 +236,10 @@
 }
 - (void)initLoadingView2 {
     
-    self.loadingWeight = 5.0;
-    
     self.loadingView2 = [UIView new];
     [self.loadingView2 setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.loadingView2 setBackgroundColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1]];
-    [self.loadingView2.layer setBorderColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:.75].CGColor];
+    [self.loadingView2 setBackgroundColor:self.color];
+    [self.loadingView2.layer setBorderColor:[UIColor clearColor].CGColor];
     [self.loadingView2.layer setBorderWidth:1.0f / [UIScreen mainScreen].scale];
     [self.loadingView2.layer setCornerRadius:(self.loadingDimension - (self.loadingWeight * 2)) / 2];
     [self.loadingView2 setClipsToBounds:YES];
@@ -249,26 +286,13 @@
     [self initLoadingView2];
 }
 
-- (void)touchBackground {
-    [OAHUD hide];
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self initUI];
-    [self runShowAnimate];
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchBackground)];
-    singleTap.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:singleTap];
-}
-- (CAGradientLayer*)colorGradient:(NSMutableArray *)colorInfos {
+- (CAGradientLayer*)colorGradient {
     NSMutableArray *colors = [NSMutableArray new];
-    for (id colorInfo in colorInfos)
+    for (id colorInfo in self.colorInfos)
         [colors addObject:(id)((UIColor *)[colorInfo objectForKey:@"color"]).CGColor];
     
     NSMutableArray *locations = [NSMutableArray new];
-    for (id colorInfo in colorInfos)
+    for (id colorInfo in self.colorInfos)
         [locations addObject:[colorInfo objectForKey:@"location"]];
     
     CAGradientLayer *headerLayer = [CAGradientLayer layer];

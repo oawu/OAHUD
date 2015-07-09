@@ -20,7 +20,13 @@
 @property UIView *loadingView1;
 @property UIView *loadingView2;
 
+@property UIColor *color;
+@property NSArray *colorInfos;
+
 + (void)show;
 + (void)hide;
+
+- (void)show;
+- (void)hide;
 
 @end

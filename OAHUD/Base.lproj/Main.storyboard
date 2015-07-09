@@ -17,27 +17,38 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4H-0p-HDH">
-                                <rect key="frame" x="270" y="99" width="60" height="30"/>
-                                <state key="normal" title="快來按我">
+                                <rect key="frame" x="266" y="64" width="69" height="30"/>
+                                <state key="normal" title="快來按我1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="click:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="58S-ey-aO9"/>
+                                    <action selector="click1:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="AmB-NH-kvG"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="1Ag-ff-YFI">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="1Ag-ff-YFI">
                                 <rect key="frame" x="180" y="172" width="240" height="128"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyv-Fu-nqL">
+                                <rect key="frame" x="266" y="108" width="69" height="30"/>
+                                <state key="normal" title="快來按我2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="click2:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="v1L-PF-ctt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1Ag-ff-YFI" firstAttribute="top" secondItem="e4H-0p-HDH" secondAttribute="bottom" constant="10" id="BlN-5I-BPM"/>
-                            <constraint firstAttribute="centerX" secondItem="e4H-0p-HDH" secondAttribute="centerX" id="D5r-K4-93J"/>
-                            <constraint firstAttribute="trailing" secondItem="1Ag-ff-YFI" secondAttribute="trailing" constant="10" id="K96-kn-VAB"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="1Ag-ff-YFI" secondAttribute="bottom" constant="10" id="bQK-Q9-mgg"/>
-                            <constraint firstAttribute="centerX" secondItem="1Ag-ff-YFI" secondAttribute="centerX" id="f4j-WD-ary"/>
-                            <constraint firstItem="1Ag-ff-YFI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="gs3-gv-bW5"/>
-                            <constraint firstItem="e4H-0p-HDH" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="zBS-aK-UD9"/>
+                            <constraint firstItem="1Ag-ff-YFI" firstAttribute="top" secondItem="cyv-Fu-nqL" secondAttribute="bottom" constant="20" id="DAg-Ky-jRn"/>
+                            <constraint firstAttribute="centerX" secondItem="cyv-Fu-nqL" secondAttribute="centerX" id="Dpy-86-m0x"/>
+                            <constraint firstAttribute="centerX" secondItem="e4H-0p-HDH" secondAttribute="centerX" id="GxE-3I-zol"/>
+                            <constraint firstItem="cyv-Fu-nqL" firstAttribute="top" secondItem="e4H-0p-HDH" secondAttribute="bottom" constant="20" id="Miy-CE-rkh"/>
+                            <constraint firstAttribute="trailing" secondItem="1Ag-ff-YFI" secondAttribute="trailing" constant="10" id="RtL-ff-LT0"/>
+                            <constraint firstAttribute="centerX" secondItem="1Ag-ff-YFI" secondAttribute="centerX" id="bnt-cv-zmJ"/>
+                            <constraint firstItem="e4H-0p-HDH" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="jfS-fg-uR2"/>
+                            <constraint firstItem="1Ag-ff-YFI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="niX-Xs-D0A"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="1Ag-ff-YFI" secondAttribute="bottom" constant="10" id="ouT-Ml-UV8"/>
                         </constraints>
                     </view>
                 </viewController>
