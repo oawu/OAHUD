@@ -13,15 +13,15 @@
 
 @property UIVisualEffectView *visualEffectView;
 @property UIView *panelView;
-@property CGFloat panelViewDimension;
 
-@property CGFloat loadingDimension;
-@property CGFloat loadingWeight;
 @property UIView *loadingView1;
 @property UIView *loadingView2;
 
-@property UIColor *color;
+@property CGFloat panelViewDimension;
+@property CGFloat loadingDimension;
+@property CGFloat loadingWeight;
 @property NSArray *colorInfos;
+@property UIColor *color;
 
 + (void)show;
 + (void)hide;

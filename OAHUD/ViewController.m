@@ -18,13 +18,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)click1:(id)sender {
     [OAHUD show];
     [self performSelector:@selector(hideClick1) withObject:nil afterDelay:2.0f];
@@ -46,7 +45,7 @@
                              @"location":@0.5f},
                            @{@"color":[UIColor colorWithRed:0.18 green:0.53 blue:0.09 alpha:1],
                              @"location":@1.0f}]];
-
+    
     [oaHud show];
     [self performSelector:@selector(hideClick2) withObject:nil afterDelay:2.0f];
 }

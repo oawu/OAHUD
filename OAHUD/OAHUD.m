@@ -10,7 +10,11 @@
 
 @implementation OAHUD
 
+
+
 @synthesize panelViewDimension, loadingDimension, loadingWeight, colorInfos, color;
+
+
 
 + (UIWindow *)window {
     if (!objc_getAssociatedObject(self, _cmd)) {
@@ -23,6 +27,10 @@
 + (void)show {
     [OAHUD show:[OAHUD new]];
 }
++ (void)show:(OAHUD *)hud {
+    [[OAHUD window] setRootViewController:hud];
+    [[OAHUD window] makeKeyAndVisible];
+}
 + (void)hide {
     [[OAHUD window].rootViewController performSelector:@selector(runHideAnimate:) withObject: ^{
         [OAHUD window].hidden = YES;
@@ -30,18 +38,36 @@
         [[UIApplication sharedApplication].keyWindow makeKeyWindow];
     }];
 }
-+ (void)show:(OAHUD *)hud {
-    [[OAHUD window] setRootViewController:hud];
-    [[OAHUD window] makeKeyAndVisible];
+
+
+
+- (void)show {
+    [OAHUD show:self];
+}
+- (void)hide {
+    [OAHUD hide];
 }
 
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self initOption];
+    
+    [self initVisualEffectView];
+    [self initPanelView];
+    [self initLoadingView1];
+    [self initLoadingView2];
+    
+    [self runShowAnimate];
+}
 - (void)initOption {
     if (!self.panelViewDimension)
         [self setPanelViewDimension:100.0];
-
+    
     if (!self.loadingDimension)
         [self setLoadingDimension:70.0];
-
+    
     if (!self.loadingWeight)
         [self setLoadingWeight:5.0];
     
@@ -52,27 +78,61 @@
         [self setLoadingWeight:self.loadingDimension / 4];
     
     if (!self.colorInfos)
-        [self setColorInfos:@[@{@"color":[UIColor colorWithRed:0.44 green:0.79 blue:0.94 alpha:1],
+        [self setColorInfos:@[@{@"color":[UIColor colorWithRed:0.99 green:0.36 blue:0.32 alpha:1],
                                 @"location":@0.0f},
-                              @{@"color":[UIColor colorWithRed:0.44 green:0.79 blue:0.94 alpha:0],
+                              @{@"color":[UIColor colorWithRed:0.16 green:0.76 blue:0.99 alpha:1],
                                 @"location":@1.0f}]];
     if (!self.color)
         [self setColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1]];
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)runShowAnimate {
+    float time = 0.5;
+    __weak OAHUD *wealSelf = self;
     
-    [self initOption];
-    [self initUI];
-    [self runShowAnimate];
+    wealSelf.view.alpha = 1.0f;
+    wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.0, 0.0);
+    
+    [UIView animateWithDuration:time * 0.5 animations: ^{
+        wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+    } completion: ^(BOOL finished) {
+        [UIView animateWithDuration:time * 0.1 animations: ^{
+            wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96);
+        } completion: ^(BOOL finished) {
+            [UIView animateWithDuration:time * 0.08 animations: ^{
+                wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.02, 1.02);
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:time * 0.05 animations: ^{
+                    wealSelf.panelView.transform = CGAffineTransformIdentity;
+                }];
+            }];
+        }];
+    }];
 }
-- (void)show {
-    [OAHUD show:self];
+- (void)runHideAnimate:(void (^)(void))completion {
+    float time = 0.5;
+    __weak OAHUD *wealSelf = self;
+    
+    wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);
+    
+    [UIView animateWithDuration:time * 0.05 animations: ^{
+        wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.02, 1.02);
+    } completion: ^(BOOL finished) {
+        [UIView animateWithDuration:time * 0.08 animations: ^{
+            wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96);
+        } completion: ^(BOOL finished) {
+            [UIView animateWithDuration:time * 0.1 animations: ^{
+                wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:time * 0.5 animations: ^{
+                    wealSelf.view.alpha = 0.0f;
+                    wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
+                } completion:^(BOOL finished) {
+                    completion();
+                }];
+            }];
+        }];
+    }];
 }
-- (void)hide {
-    [OAHUD hide];
-}
-
 - (void)initVisualEffectView {
     self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
     [self.visualEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -128,9 +188,6 @@
                                                            constant:0.0]];
 }
 - (void)initPanelView {
-    
-
-    
     self.panelView = [UIView new];
     [self.panelView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.panelView setBackgroundColor:self.color];
@@ -138,7 +195,6 @@
     [self.panelView.layer setBorderWidth:3.5f / [UIScreen mainScreen].scale];
     [self.panelView.layer setCornerRadius:10.0f];
     [self.panelView setClipsToBounds:YES];
-    
     [self.view addSubview:self.panelView];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.panelView
@@ -174,15 +230,12 @@
                                                            constant:self.panelViewDimension]];
 }
 - (void)initLoadingView1 {
-    
     self.loadingView1 = [UIView new];
     [self.loadingView1 setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     [self.loadingView1.layer setBorderColor:[UIColor clearColor].CGColor];
     [self.loadingView1.layer setBorderWidth:1.0f / [UIScreen mainScreen].scale];
     [self.loadingView1.layer setCornerRadius:self.loadingDimension / 2];
     [self.loadingView1 setClipsToBounds:YES];
-    
     [self.panelView addSubview:self.loadingView1];
     
     [self.panelView addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingView1
@@ -201,7 +254,6 @@
                                                               multiplier:1.0
                                                                 constant:0.0]];
     
-    
     [self.panelView addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingView1
                                                                attribute:NSLayoutAttributeHeight
                                                                relatedBy:NSLayoutRelationEqual
@@ -218,8 +270,6 @@
                                                               multiplier:1.0
                                                                 constant:self.loadingDimension]];
     
-
-    
     CAGradientLayer *bgLayer = [self colorGradient];
     bgLayer.frame = CGRectMake(0, 0, self.loadingDimension, self.loadingDimension);
     [self.loadingView1.layer insertSublayer:bgLayer atIndex:0];
@@ -235,7 +285,6 @@
     }
 }
 - (void)initLoadingView2 {
-    
     self.loadingView2 = [UIView new];
     [self.loadingView2 setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.loadingView2 setBackgroundColor:self.color];
@@ -243,7 +292,6 @@
     [self.loadingView2.layer setBorderWidth:1.0f / [UIScreen mainScreen].scale];
     [self.loadingView2.layer setCornerRadius:(self.loadingDimension - (self.loadingWeight * 2)) / 2];
     [self.loadingView2 setClipsToBounds:YES];
-    
     [self.panelView addSubview:self.loadingView2];
     
     [self.panelView addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingView2
@@ -262,7 +310,6 @@
                                                               multiplier:1.0
                                                                 constant:0.0]];
     
-    
     [self.panelView addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingView2
                                                                attribute:NSLayoutAttributeHeight
                                                                relatedBy:NSLayoutRelationEqual
@@ -278,12 +325,6 @@
                                                                attribute:NSLayoutAttributeNotAnAttribute
                                                               multiplier:1.0
                                                                 constant:self.loadingDimension - (self.loadingWeight * 2)]];
-}
-- (void)initUI {
-    [self initVisualEffectView];
-    [self initPanelView];
-    [self initLoadingView1];
-    [self initLoadingView2];
 }
 
 - (CAGradientLayer*)colorGradient {
@@ -301,69 +342,9 @@
     
     return headerLayer;
 }
-- (void)runHideAnimate:(void (^)(void))completion {
-    float time = 0.5;
-    __weak OAHUD *wealSelf = self;
-    
-    wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);
-    
-    [UIView animateWithDuration:time * 0.05 animations: ^{
-        wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.02, 1.02);
-    } completion: ^(BOOL finished) {
-        [UIView animateWithDuration:time * 0.08 animations: ^{
-            wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96);
-        } completion: ^(BOOL finished) {
-            [UIView animateWithDuration:time * 0.1 animations: ^{
-                wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
-            } completion: ^(BOOL finished) {
-                [UIView animateWithDuration:time * 0.5 animations: ^{
-                    wealSelf.view.alpha = 0.0f;
-                    wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
-                } completion:^(BOOL finished) {
-                    completion();
-                }];
-            }];
-        }];
-    }];
-    
-}
-- (void)runShowAnimate {
-    float time = 0.5;
-    __weak OAHUD *wealSelf = self;
-    
-    wealSelf.view.alpha = 1.0f;
-    wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.0, 0.0);
-    
-    [UIView animateWithDuration:time * 0.5 animations: ^{
-        wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
-    } completion: ^(BOOL finished) {
-        [UIView animateWithDuration:time * 0.1 animations: ^{
-            wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96);
-        } completion: ^(BOOL finished) {
-            [UIView animateWithDuration:time * 0.08 animations: ^{
-                wealSelf.panelView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.02, 1.02);
-            } completion: ^(BOOL finished) {
-                [UIView animateWithDuration:time * 0.05 animations: ^{
-                    wealSelf.panelView.transform = CGAffineTransformIdentity;
-                }];
-            }];
-        }];
-    }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
