@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2373A0D6-DB4F-45BF-86CE-DD0B7FA16BAE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>OAHUD</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>69B9BF6857BFE9F7100656348A018CE89316BFEF</key>
+		<string>github.com:comdan66/OAHUD.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>OAHUD.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>69B9BF6857BFE9F7100656348A018CE89316BFEF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:comdan66/OAHUD.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>69B9BF6857BFE9F7100656348A018CE89316BFEF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>69B9BF6857BFE9F7100656348A018CE89316BFEF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OAHUD</string>
+		</dict>
+	</array>
+</dict>
+</plist>

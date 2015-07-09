@@ -15,6 +15,7 @@
 		0E0686491B4EA061002AC254 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E0686481B4EA061002AC254 /* Images.xcassets */; };
 		0E06864C1B4EA061002AC254 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E06864A1B4EA061002AC254 /* LaunchScreen.xib */; };
 		0E0686581B4EA061002AC254 /* OAHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0686571B4EA061002AC254 /* OAHUDTests.m */; };
+		0E0686641B4EA1CD002AC254 /* OAHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0686631B4EA1CD002AC254 /* OAHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		0E0686511B4EA061002AC254 /* OAHUDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OAHUDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E0686561B4EA061002AC254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E0686571B4EA061002AC254 /* OAHUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAHUDTests.m; sourceTree = "<group>"; };
+		0E0686621B4EA1CD002AC254 /* OAHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAHUD.h; sourceTree = "<group>"; };
+		0E0686631B4EA1CD002AC254 /* OAHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,7 @@
 		0E0686371B4EA061002AC254 /* OAHUD */ = {
 			isa = PBXGroup;
 			children = (
+				0E0686611B4EA1B2002AC254 /* OAHUD */,
 				0E06863C1B4EA061002AC254 /* AppDelegate.h */,
 				0E06863D1B4EA061002AC254 /* AppDelegate.m */,
 				0E0686421B4EA061002AC254 /* ViewController.h */,
@@ -120,6 +124,15 @@
 				0E0686561B4EA061002AC254 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0E0686611B4EA1B2002AC254 /* OAHUD */ = {
+			isa = PBXGroup;
+			children = (
+				0E0686621B4EA1CD002AC254 /* OAHUD.h */,
+				0E0686631B4EA1CD002AC254 /* OAHUD.m */,
+			);
+			name = OAHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +239,7 @@
 				0E0686411B4EA061002AC254 /* OAHUD.xcdatamodeld in Sources */,
 				0E0686441B4EA061002AC254 /* ViewController.m in Sources */,
 				0E06863B1B4EA061002AC254 /* main.m in Sources */,
+				0E0686641B4EA1CD002AC254 /* OAHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +434,7 @@
 				0E06865D1B4EA061002AC254 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E06865E1B4EA061002AC254 /* Build configuration list for PBXNativeTarget "OAHUDTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +443,7 @@
 				0E0686601B4EA061002AC254 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
